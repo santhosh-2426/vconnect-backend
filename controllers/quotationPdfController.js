@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const Quotation = require("../models/Quotation");
+const Quotation = require("../models/quotation");
 
 exports.downloadQuotationPDF = async (req, res) => {
   try {
