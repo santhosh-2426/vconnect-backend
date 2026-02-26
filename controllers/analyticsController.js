@@ -1,6 +1,6 @@
 const Invoice = require("../models/Invoice");
 const Expense = require("../models/Expense");
-const Project = require("../models/Project");
+const Project = require("../models/project");
 const Client = require("../models/Client");
 
 exports.getPerformanceAnalytics = async (req, res) => {
