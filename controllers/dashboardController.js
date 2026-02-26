@@ -1,5 +1,5 @@
 const Client = require('../models/Client');
-const Project = require('../models/Project');
+const Project = require('../models/project');
 const Invoice = require('../models/Invoice');
 
 exports.getDashboardSummary = async (req, res) => {

@@ -1,5 +1,5 @@
-const Quotation = require("../models/Quotation");
-const Project = require("../models/Project");
+const Quotation = require("../models/quotation");
+const Project = require("../models/project");
 const Invoice = require("../models/Invoice");
 const calculateInvoiceStatus = require("../utils/invoiceStatusHelper");
 const PDFDocument = require("pdfkit");
