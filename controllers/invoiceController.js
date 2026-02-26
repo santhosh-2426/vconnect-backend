@@ -1,5 +1,5 @@
 const Invoice = require("../models/Invoice");
-const Quotation = require("../models/Quotation");
+const Quotation = require("../models/quotation");
 const calculateInvoiceStatus = require("../utils/invoiceStatusHelper");
 
 

@@ -64,5 +64,4 @@ const quotationSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-module.exports = mongoose.model("Quotation", quotationSchema);
+module.exports = mongoose.models.Quotation || mongoose.model("Quotation", quotationSchema);

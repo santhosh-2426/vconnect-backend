@@ -110,4 +110,4 @@ invoiceSchema.virtual("dueAmount").get(function () {
 invoiceSchema.set("toJSON", { virtuals: true });
 invoiceSchema.set("toObject", { virtuals: true });
 
-module.exports = mongoose.model("Invoice", invoiceSchema);
+module.exports = mongoose.models.Invoice || mongoose.model("Invoice", invoiceSchema);
