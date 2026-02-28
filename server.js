@@ -22,19 +22,24 @@ const allowedOrigins = [
   "http://localhost:5500",
   "http://127.0.0.1:5500",
   "http://localhost:3000",
-  "https://vconnect-backend-ahja.onrender.com",
-  "https://yourdomain.com",        // 🔥 REPLACE WITH YOUR REAL DOMAIN
-  "https://www.yourdomain.com"     // 🔥 REPLACE WITH YOUR REAL DOMAIN
+
+  // ✅ YOUR NETLIFY DOMAIN
+  "https://neon-creponne-ea88f0.netlify.app",
+
+  // Optional future custom domain
+  "https://vconnect-backend-ahja.onrender.com"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl)
+
+    // Allow requests with no origin (like Postman, mobile apps, curl)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -42,8 +47,6 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
-
-
 
 app.use(express.json());
 
