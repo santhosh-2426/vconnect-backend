@@ -5,12 +5,10 @@ const Project = require("../models/project");
 const Expense = require("../models/Expense");
 const Invoice = require("../models/Invoice");
 
-// Import the needed controller and middleware for the summary route
-const { getDashboardSummary } = require("../controllers/invoiceController");
-const { protect, authorizeRoles } = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
-// Connect the summary route exactly how the frontend expects it
-router.get("/summary", protect, authorizeRoles("Admin"), getDashboardSummary);
+// Protect only with token
+router.use(protect);
 
 router.get("/", async (req, res) => {
   try {
@@ -35,21 +33,21 @@ router.get("/", async (req, res) => {
 
     const today = new Date();
 
-const overdueInvoices = await Invoice.countDocuments({
-  status: { $ne: "Paid" },
-  dueDate: { $lt: today }
-});
+    const overdueInvoices = await Invoice.countDocuments({
+      status: { $ne: "Paid" },
+      dueDate: { $lt: today }
+    });
 
-res.status(200).json({
-  success: true,
-  totalClients,
-  totalProjects,
-  activeProjects,
-  totalRevenue,
-  totalExpenses,
-  totalProfit: netProfit,
-  overdueInvoices
-});
+    res.status(200).json({
+      success: true,
+      totalClients,
+      totalProjects,
+      activeProjects,
+      totalRevenue,
+      totalExpenses,
+      totalProfit: netProfit,
+      overdueInvoices
+    });
 
   } catch (error) {
     console.error("Dashboard Error:", error);

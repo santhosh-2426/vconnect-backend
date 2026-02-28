@@ -1,9 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-// ==============================
-// 🔐 VERIFY TOKEN
-// ==============================
+// 🔐 VERIFY TOKEN ONLY (NO ROLE CHECKING)
 exports.protect = async (req, res, next) => {
   let token;
 
@@ -40,31 +38,4 @@ exports.protect = async (req, res, next) => {
       message: "Not authorized, no token"
     });
   }
-};
-
-// ==============================
-// 🛡 ROLE AUTHORIZATION (FIXED)
-// ==============================
-exports.authorizeRoles = (...roles) => {
-  return (req, res, next) => {
-    if (!req.user || !req.user.role) {
-      return res.status(403).json({
-        success: false,
-        message: "Access denied. No role found."
-      });
-    }
-
-    // Convert everything to lowercase for safe comparison
-    const userRole = req.user.role.toLowerCase();
-    const allowedRoles = roles.map(role => role.toLowerCase());
-
-    if (!allowedRoles.includes(userRole)) {
-      return res.status(403).json({
-        success: false,
-        message: `Role ${req.user.role} is not allowed to access this resource`
-      });
-    }
-
-    next();
-  };
 };

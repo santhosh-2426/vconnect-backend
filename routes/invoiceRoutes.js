@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { downloadInvoicePDF } = require("../controllers/invoicePdfController");
+
+const { protect } = require("../middleware/authMiddleware");
 
 const {
   createInvoice,
@@ -15,21 +16,22 @@ const {
   sendInvoiceEmail,
 } = require("../controllers/invoiceController");
 
-const { protect, authorizeRoles } = require("../middleware/authMiddleware");
+const { downloadInvoicePDF } = require("../controllers/invoicePdfController");
 
+// Only token required
 router.use(protect);
 
-router.post("/", authorizeRoles("Admin", "Accountant"), createInvoice);
-router.post("/from-quotation/:id", authorizeRoles("Admin", "Accountant"), createInvoiceFromQuotation);
-router.post("/:id/payment", authorizeRoles("Admin", "Accountant"), addPayment);
+router.post("/", createInvoice);
+router.post("/from-quotation/:id", createInvoiceFromQuotation);
+router.post("/:id/payment", addPayment);
 
-router.get("/", authorizeRoles("Admin", "Accountant"), getAllInvoices);
-router.get("/overdue", authorizeRoles("Admin", "Accountant"), getOverdueInvoices);
-router.get("/analytics/monthly-revenue", authorizeRoles("Admin"), getMonthlyRevenue);
-router.get("/analytics/service-revenue", authorizeRoles("Admin"), getServiceRevenue);
-router.get("/analytics/dashboard-summary", authorizeRoles("Admin"), getDashboardSummary);
-router.delete("/:id", authorizeRoles("Admin"), deleteInvoice);
-router.get("/:id/pdf", authorizeRoles("Admin", "Accountant"), downloadInvoicePDF);
-router.post("/:id/send", authorizeRoles("Admin"), sendInvoiceEmail);
+router.get("/", getAllInvoices);
+router.get("/overdue", getOverdueInvoices);
+router.get("/analytics/monthly-revenue", getMonthlyRevenue);
+router.get("/analytics/service-revenue", getServiceRevenue);
+router.get("/analytics/dashboard-summary", getDashboardSummary);
+router.delete("/:id", deleteInvoice);
+router.get("/:id/pdf", downloadInvoicePDF);
+router.post("/:id/send", sendInvoiceEmail);
 
 module.exports = router;

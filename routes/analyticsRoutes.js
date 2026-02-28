@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const { protect } = require("../middleware/authMiddleware");
 const { getPerformanceAnalytics } = require("../controllers/analyticsController");
-const { protect, authorizeRoles } = require("../middleware/authMiddleware");
 
-// 🔐 Protect analytics route (Admin only)
-router.get(
-  "/",
-  protect,
-  authorizeRoles("Admin"),
-  getPerformanceAnalytics
-);
+// Token only
+router.get("/", protect, getPerformanceAnalytics);
 
 module.exports = router;
