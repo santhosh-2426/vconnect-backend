@@ -27,7 +27,10 @@ const allowedOrigins = [
   "https://neon-creponne-ea88f0.netlify.app",
 
   // Optional future custom domain
-  "https://vconnect-backend-ahja.onrender.com"
+  "https://vconnect-backend-ahja.onrender.com",
+
+    "https://sarvatraders.in",
+  "https://www.sarvatraders.in"
 ];
 
 app.use(cors({
